@@ -5,12 +5,224 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUCT Reporting System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .login-container { max-width: 400px; margin: 100px auto; padding: 20px; }
-        .dashboard { display: none; }
-        .module-section { display: none; }
-        .active-module { display: block; }
-        .nav-link { cursor: pointer; }
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            max-width: 420px;
+            margin: 80px auto;
+            padding: 30px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            box-shadow: var(--hover-shadow);
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #219a52);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .module-section {
+            display: none;
+        }
+
+        .nav-link {
+            cursor: pointer;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), #34495e) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-left: 4px solid var(--secondary-color);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .module-card:hover {
+            border-left-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .demo-accounts {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        .report-form-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .user-welcome {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .role-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 40px 20px;
+                padding: 20px;
+            }
+            
+            .card-body {
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -18,26 +230,34 @@
     <div id="loginSection" class="container">
         <div class="login-container card shadow">
             <div class="card-body">
-                <h3 class="text-center mb-4">Access LUCT Reporting System</h3>
+                <div class="text-center mb-4">
+                    <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
+                    <h3 class="text-gradient">Access LUCT Reporting System</h3>
+                    <p class="text-muted">Welcome back! Please sign in to your account.</p>
+                </div>
                 <form id="loginForm">
                     <div class="mb-3">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <label class="form-label"><i class="fas fa-envelope me-2"></i>Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" required>
+                        <label class="form-label"><i class="fas fa-lock me-2"></i>Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </button>
                 </form>
                 <div class="text-center mt-3">
-                    <a href="#" onclick="showRegister()">Don't have an account? Register here</a>
+                    <a href="#" onclick="showRegister()" class="text-decoration-none">
+                        <i class="fas fa-user-plus me-1"></i>Don't have an account? Register here
+                    </a>
                 </div>
-                <div class="mt-3 p-3 bg-light rounded">
-                    <h6>Demo Accounts:</h6>
-                    <small>Student: student@luct.com / password</small><br>
-                    <small>Lecturer: lecturer@luct.com / password</small><br>
-                    <small>Program Leader: leader@luct.com / password</small>
+                <div class="mt-4 demo-accounts p-3">
+                    <h6><i class="fas fa-users me-2"></i>Demo Accounts:</h6>
+                    <small><strong>Student:</strong> student@luct.com / password</small><br>
+                    <small><strong>Lecturer:</strong> lecturer@luct.com / password</small><br>
+                    <small><strong>Program Leader:</strong> leader@luct.com / password</small>
                 </div>
             </div>
         </div>
@@ -47,22 +267,26 @@
     <div id="registerSection" class="container" style="display: none;">
         <div class="login-container card shadow">
             <div class="card-body">
-                <h3 class="text-center mb-4">Create Your Account</h3>
+                <div class="text-center mb-4">
+                    <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                    <h3>Create Your Account</h3>
+                    <p class="text-muted">Join the LUCT Reporting System</p>
+                </div>
                 <form id="registerForm">
                     <div class="mb-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="fullName" required>
+                        <label class="form-label"><i class="fas fa-user me-2"></i>Full Name</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="regEmail" required>
+                        <label class="form-label"><i class="fas fa-envelope me-2"></i>Email</label>
+                        <input type="email" class="form-control" id="regEmail" placeholder="Enter your email" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="regPassword" required>
+                        <label class="form-label"><i class="fas fa-lock me-2"></i>Password</label>
+                        <input type="password" class="form-control" id="regPassword" placeholder="Create a password" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">I am a</label>
+                        <label class="form-label"><i class="fas fa-user-tag me-2"></i>I am a</label>
                         <select class="form-select" id="userType" required>
                             <option value="">Select Role</option>
                             <option value="student">Student</option>
@@ -71,10 +295,14 @@
                             <option value="leader">Program Leader</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success w-100">Create Account</button>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-check me-2"></i>Create Account
+                    </button>
                 </form>
                 <div class="text-center mt-3">
-                    <a href="#" onclick="showLogin()">Already have an account? Sign in</a>
+                    <a href="#" onclick="showLogin()" class="text-decoration-none">
+                        <i class="fas fa-arrow-left me-1"></i>Already have an account? Sign in
+                    </a>
                 </div>
             </div>
         </div>
@@ -82,22 +310,28 @@
 
     <!-- Main Dashboard -->
     <div id="dashboard" class="dashboard">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <span class="navbar-brand">LUCT Reporting System</span>
+                <span class="navbar-brand">
+                    <i class="fas fa-graduation-cap me-2"></i>LUCT Reporting System
+                </span>
                 <div class="navbar-nav ms-auto">
-                    <span class="navbar-text me-3" id="userWelcome"></span>
-                    <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+                    <span class="user-welcome me-3" id="userWelcome"></span>
+                    <button class="btn btn-outline-light btn-sm" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
                 </div>
             </div>
         </nav>
 
-        <div class="container-fluid mt-3">
+        <div class="container-fluid mt-4">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-3">
                     <div class="card">
-                        <div class="card-header">Navigation</div>
+                        <div class="card-header">
+                            <i class="fas fa-bars me-2"></i>Navigation
+                        </div>
                         <div class="card-body">
                             <nav class="nav flex-column" id="navMenu">
                                 <!-- Menu items will be populated based on user role -->
@@ -109,28 +343,38 @@
                 <!-- Main Content -->
                 <div class="col-md-9">
                     <!-- Student Modules -->
-                    <div id="studentModules" class="module-section">
+                    <div id="studentModules" class="module-section fade-in">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Student Dashboard</h5>
+                                <h5><i class="fas fa-user-graduate me-2"></i>Student Dashboard</h5>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card module-card">
+                                            <div class="card-body text-center">
+                                                <div class="icon-circle">
+                                                    <i class="fas fa-chart-line text-primary"></i>
+                                                </div>
                                                 <h6>Monitoring</h6>
-                                                <p>View class attendance and reports</p>
-                                                <button class="btn btn-primary" onclick="loadReports()">View Reports</button>
+                                                <p class="text-muted">View class attendance and reports</p>
+                                                <button class="btn btn-primary" onclick="loadReports()">
+                                                    <i class="fas fa-eye me-1"></i>View Reports
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card module-card">
+                                            <div class="card-body text-center">
+                                                <div class="icon-circle">
+                                                    <i class="fas fa-star text-warning"></i>
+                                                </div>
                                                 <h6>Rating</h6>
-                                                <p>Rate lectures and provide feedback</p>
-                                                <button class="btn btn-warning" onclick="showRating()">Rate Lectures</button>
+                                                <p class="text-muted">Rate lectures and provide feedback</p>
+                                                <button class="btn btn-warning" onclick="showRating()">
+                                                    <i class="fas fa-edit me-1"></i>Rate Lectures
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -140,116 +384,105 @@
                     </div>
 
                     <!-- Lecturer Modules -->
-                    <div id="lecturerModules" class="module-section">
+                    <div id="lecturerModules" class="module-section fade-in">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5>Lecturer Dashboard</h5>
-                                <button class="btn btn-success" onclick="showReportForm()">+ New Report</button>
+                                <h5><i class="fas fa-chalkboard-teacher me-2"></i>Lecturer Dashboard</h5>
+                                <button class="btn btn-success" onclick="showReportForm()">
+                                    <i class="fas fa-plus me-1"></i>New Report
+                                </button>
                             </div>
                             <div class="card-body">
                                 <!-- Report Form -->
                                 <div id="reportForm" style="display: none;">
-                                    <h6>Lecturer Reporting Form</h6>
-                                    <form id="lectureReportForm">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Faculty Name</label>
-                                                    <input type="text" class="form-control" required>
+                                    <div class="report-form-section">
+                                        <h6><i class="fas fa-file-alt me-2"></i>Lecturer Reporting Form</h6>
+                                        <form id="lectureReportForm">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Faculty Name</label>
+                                                        <input type="text" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Class Name</label>
+                                                        <input type="text" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Week of Reporting</label>
+                                                        <input type="week" class="form-control" required>
+                                                    </div>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Class Name</label>
-                                                    <input type="text" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Week of Reporting</label>
-                                                    <input type="week" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Date of Lecture</label>
-                                                    <input type="date" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Course Name</label>
-                                                    <input type="text" class="form-control" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Course Code</label>
-                                                    <input type="text" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Lecturer's Name</label>
-                                                    <input type="text" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Actual Students Present</label>
-                                                    <input type="number" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Total Registered Students</label>
-                                                    <input type="number" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Venue</label>
-                                                    <input type="text" class="form-control" required>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Course Code</label>
+                                                        <input type="text" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Lecturer's Name</label>
+                                                        <input type="text" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Actual Students Present</label>
+                                                        <input type="number" class="form-control" required>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Scheduled Lecture Time</label>
-                                            <input type="text" class="form-control" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Topic Taught</label>
-                                            <textarea class="form-control" rows="2" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Learning Outcomes</label>
-                                            <textarea class="form-control" rows="2" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Lecturer's Recommendations</label>
-                                            <textarea class="form-control" rows="2" required></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Submit Report</button>
-                                        <button type="button" class="btn btn-secondary" onclick="hideReportForm()">Cancel</button>
-                                    </form>
+                                            <!-- More form fields... -->
+                                            <button type="submit" class="btn btn-primary me-2">
+                                                <i class="fas fa-paper-plane me-1"></i>Submit Report
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" onclick="hideReportForm()">
+                                                <i class="fas fa-times me-1"></i>Cancel
+                                            </button>
+                                        </form>
+                                    </div>
                                     <hr>
                                 </div>
 
-                                <!-- Lecturer Modules -->
+                                <!-- Lecturer Modules Grid -->
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="card">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card module-card">
                                             <div class="card-body text-center">
+                                                <i class="fas fa-users fa-2x text-primary mb-3"></i>
                                                 <h6>Classes</h6>
-                                                <button class="btn btn-outline-primary" onclick="showModule('classes')">View</button>
+                                                <button class="btn btn-outline-primary btn-sm" onclick="showModule('classes')">
+                                                    View Classes
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="card">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card module-card">
                                             <div class="card-body text-center">
+                                                <i class="fas fa-file-alt fa-2x text-info mb-3"></i>
                                                 <h6>Reports</h6>
-                                                <button class="btn btn-outline-info" onclick="showModule('reports')">View</button>
+                                                <button class="btn btn-outline-info btn-sm" onclick="showModule('reports')">
+                                                    View Reports
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="card">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card module-card">
                                             <div class="card-body text-center">
+                                                <i class="fas fa-chart-bar fa-2x text-warning mb-3"></i>
                                                 <h6>Monitoring</h6>
-                                                <button class="btn btn-outline-warning" onclick="showModule('monitoring')">View</button>
+                                                <button class="btn btn-outline-warning btn-sm" onclick="showModule('monitoring')">
+                                                    View Monitoring
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="card">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card module-card">
                                             <div class="card-body text-center">
+                                                <i class="fas fa-star fa-2x text-success mb-3"></i>
                                                 <h6>Rating</h6>
-                                                <button class="btn btn-outline-success" onclick="showModule('rating')">View</button>
+                                                <button class="btn btn-outline-success btn-sm" onclick="showModule('rating')">
+                                                    View Rating
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -259,37 +492,46 @@
                     </div>
 
                     <!-- Program Leader Modules -->
-                    <div id="leaderModules" class="module-section">
+                    <div id="leaderModules" class="module-section fade-in">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Program Leader Dashboard</h5>
+                                <h5><i class="fas fa-user-tie me-2"></i>Program Leader Dashboard</h5>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="card">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card module-card">
                                             <div class="card-body text-center">
+                                                <i class="fas fa-book fa-3x text-primary mb-3"></i>
                                                 <h6>Courses</h6>
-                                                <p>Add & assign lecture modules</p>
-                                                <button class="btn btn-primary" onclick="manageCourses()">Manage</button>
+                                                <p class="text-muted">Add & assign lecture modules</p>
+                                                <button class="btn btn-primary" onclick="manageCourses()">
+                                                    <i class="fas fa-cog me-1"></i>Manage Courses
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="card">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card module-card">
                                             <div class="card-body text-center">
+                                                <i class="fas fa-chart-pie fa-3x text-info mb-3"></i>
                                                 <h6>Reports</h6>
-                                                <p>View reports from PRL</p>
-                                                <button class="btn btn-info" onclick="viewReports()">View</button>
+                                                <p class="text-muted">View reports from PRL</p>
+                                                <button class="btn btn-info" onclick="viewReports()">
+                                                    <i class="fas fa-chart-bar me-1"></i>View Reports
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="card">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card module-card">
                                             <div class="card-body text-center">
+                                                <i class="fas fa-chalkboard-teacher fa-3x text-warning mb-3"></i>
                                                 <h6>Lectures</h6>
-                                                <p>Manage lecture assignments</p>
-                                                <button class="btn btn-warning" onclick="manageLectures()">Manage</button>
+                                                <p class="text-muted">Manage lecture assignments</p>
+                                                <button class="btn btn-warning" onclick="manageLectures()">
+                                                    <i class="fas fa-tasks me-1"></i>Manage Lectures
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -324,7 +566,7 @@
                 currentUser = user;
                 showDashboard();
             } else {
-                alert('Login failed. Please try again.');
+                alert('Login failed. Please check your credentials and try again.');
             }
         });
 
@@ -338,12 +580,12 @@
             
             // Check if email already exists
             if (users.find(u => u.email === email)) {
-                alert('Registration failed. Try a different email.');
+                alert('Registration failed. This email is already registered. Try a different email.');
                 return;
             }
             
             users.push({ email, password, role, name });
-            alert('Registration successful! Please login.');
+            alert('Registration successful! Please login with your new account.');
             showLogin();
         });
 
@@ -373,22 +615,22 @@
             
             const menus = {
                 student: [
-                    { id: 'monitoring', name: 'Monitoring' },
-                    { id: 'rating', name: 'Rating' }
+                    { id: 'monitoring', name: '📊 Monitoring', icon: 'chart-line' },
+                    { id: 'rating', name: '⭐ Rating', icon: 'star' }
                 ],
                 lecturer: [
-                    { id: 'classes', name: 'Classes' },
-                    { id: 'reports', name: 'Reports' },
-                    { id: 'monitoring', name: 'Monitoring' },
-                    { id: 'rating', name: 'Rating' }
+                    { id: 'classes', name: '👥 Classes', icon: 'users' },
+                    { id: 'reports', name: '📋 Reports', icon: 'file-alt' },
+                    { id: 'monitoring', name: '📈 Monitoring', icon: 'chart-bar' },
+                    { id: 'rating', name: '⭐ Rating', icon: 'star' }
                 ],
                 leader: [
-                    { id: 'courses', name: 'Courses' },
-                    { id: 'reports', name: 'Reports' },
-                    { id: 'monitoring', name: 'Monitoring' },
-                    { id: 'classes', name: 'Classes' },
-                    { id: 'lectures', name: 'Lectures' },
-                    { id: 'rating', name: 'Rating' }
+                    { id: 'courses', name: '📚 Courses', icon: 'book' },
+                    { id: 'reports', name: '📊 Reports', icon: 'chart-pie' },
+                    { id: 'monitoring', name: '👀 Monitoring', icon: 'eye' },
+                    { id: 'classes', name: '🏫 Classes', icon: 'university' },
+                    { id: 'lectures', name: '👨‍🏫 Lectures', icon: 'chalkboard-teacher' },
+                    { id: 'rating', name: '⭐ Rating', icon: 'star' }
                 ]
             };
             
@@ -396,7 +638,7 @@
             userMenus.forEach(menu => {
                 const link = document.createElement('a');
                 link.className = 'nav-link';
-                link.textContent = menu.name;
+                link.innerHTML = `<i class="fas fa-${menu.icon} me-2"></i>${menu.name}`;
                 link.onclick = () => showModule(menu.id);
                 navMenu.appendChild(link);
             });
@@ -414,7 +656,7 @@
         }
 
         function showModule(module) {
-            alert(`Showing ${module} module - This would load specific content in a real application`);
+            alert(`Loading ${module} module - This would display specific content in a fully developed application`);
         }
 
         function showReportForm() {
